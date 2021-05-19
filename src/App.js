@@ -1,72 +1,80 @@
 import { useState, useEffect } from 'react';
-
-const fields = "only_results, condition, description, city_name, temp, forecast, max, min, weekday";
+import Forecast from './Forecast.js';
 
 export default function App() {
-  const [infos, setInfos] = useState({});
+  const [results, setResults] = useState({});
+  const [loading, setLoading] = useState(true);
 
-  async function fetchInfos (longitude, latitude) {
+  async function fetchResults (longitude, latitude) {
     const lat = latitude.toFixed(2);
     const lon = longitude.toFixed(2);
 
     const url = `
-    https://api.hgbrasil.com/weather?locale=pt&lat=${lat}&lon=${lon}&array_limit=7&fields=${fields}&key=fc6021ed
+    https://api.hgbrasil.com/weather?locale=pt&lat=${lat}&lon=${lon}&array_limit=7&fields=only_results&key=fc6021ed
     `;
 
-    const response = await fetch(url)
-    const data = await response.json();
+    setLoading(true);
 
-    setInfos(data);
+    try {
+      const response = await fetch(url)
+      const data = await response.json();
+
+      setLoading(false);
+      setResults(data);
+    } catch (error) {
+      setLoading(false);
+
+      console.log(error);
+    }
   }
-
+  
   useEffect(() => {
     console.clear();
 
     navigator
       .geolocation
       .getCurrentPosition(
-        (position) => fetchInfos(position.coords.longitude, position.coords.latitude), 
+        (position) => fetchResults(position.coords.longitude, position.coords.latitude), 
         () => console.log("error")
       );
   }, []);
+  
+  console.log(results);
 
-  console.log(infos);
+  if (loading) {
+    return (
+      <main>
+        <header>
+          <h1>Weather App</h1>
+        </header>
+        <article>
+          <h2>Aguarde...</h2>
+        </article>
+      </main>
+    );
+  }
+
+  if (Object.values(results).length === 0) {
+    return (
+      <main>
+        <header>
+          <h1>Weather App</h1>
+        </header>
+        <article>
+          <button onClick={fetchResults}>refresh</button>
+        </article>
+      </main>
+    );
+  }
 
   return (
-    <>
+    <main>
       <header>
         <h1>Weather App</h1>
       </header>
-
-      <div className="appContainer">
-        <div className="currentDay">
-          <h2>{infos.description}</h2>
-          <p>{infos.city_name}</p>
-          <span>{infos.temp}°</span>
-
-            <div>
-              <p><strong>Max:</strong>{infos.forecast[0].max}°</p>
-              <div>|</div>
-              <p><strong>Min:</strong>{infos.forecast[0].min}°</p>
-            </div>
-          </div>
-
-          <div className="anotherDays">
-          {
-            infos.forecast.map(({weekday, max, min}, index) => {
-              return (
-                <div key={index}>
-                  <h3>{weekday}</h3>
-                  <div>
-                    <p><strong>Max:</strong> {max}°</p>
-                    <p><strong>Min:</strong> {min}°</p>
-                  </div>
-                </div>
-              );
-            })
-          }
-          </div>
-      </div>
-    </>
+      <article>
+        <Forecast results={results} />
+      </article>
+    </main>
   );
 }
