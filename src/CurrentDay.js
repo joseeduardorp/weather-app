@@ -4,7 +4,10 @@ export default function CurrentDay({ today, index }) {
       <div className="condition">
         <h2>{today.city_name}</h2>
         <p>{today.forecast[index].weekday} {today.forecast[index].date}</p>
-        <img src="./icons/039-sun.svg" alt="sol" />
+        <img
+          src={`./icons/${today.forecast[index].condition}.svg`}
+          alt={`${today.forecast[index].condition}`}
+        />
         {index === 0 ? 
           (<p>{today.description}</p>) 
           :
