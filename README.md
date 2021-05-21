@@ -15,6 +15,13 @@ Colocar em prática conceitos de coleta de dados em uma API de clima.
 
 ## Como executar
 
+- instale a extensão [Allow CORS](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?utm_source=chrome-ntp-icon)
 - clone o repositório
 - instale as dependências com o `npm` ou `yarn`
 - inicie o servidor com `npm run start` ou `yarn start`
+
+## Informações adicionais
+
+- Api usada: [hgbrasil.com](https://hgbrasil.com/status/weather)
+- Design inspirado em: [Oliver Yang](https://dribbble.com/visionyang)
+- Pacote de icones por: [Iconixar](https://www.flaticon.com/authors/iconixar)
