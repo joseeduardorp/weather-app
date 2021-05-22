@@ -28,8 +28,6 @@ export default function App() {
         break;
     }
   }
-
-  
   
   useEffect(() => {
     async function fetchResults(position) {
@@ -39,7 +37,7 @@ export default function App() {
         const [lon, lat] = formatPosition(position);
   
         const url = `
-        https://api.hgbrasil.com/weather?locale=pt&lat=${lat}&lon=${lon}&array_limit=7&fields=only_results&key=fc6021ed
+        https://api.hgbrasil.com/weather?locale=pt&lat=${lat}&lon=${lon}&array_limit=7&fields=only_results&key=ee1a07d8
         `;
   
         const response = await fetch(url)
