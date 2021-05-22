@@ -29,29 +29,31 @@ export default function App() {
     }
   }
 
-  async function fetchResults(position) {
-    setLoading(true);
-
-    try {
-      const [lon, lat] = formatPosition(position);
-
-      const url = `
-      https://api.hgbrasil.com/weather?locale=pt&lat=${lat}&lon=${lon}&array_limit=7&fields=only_results&key=fc6021ed
-      `;
-
-      const response = await fetch(url)
-      const data = await response.json();
-
-      setLoading(false);
-      setResults(data);
-    } catch (error) {
-      setLoading(false);
-
-      console.log(error);
-    }
-  }
+  
   
   useEffect(() => {
+    async function fetchResults(position) {
+      setLoading(true);
+  
+      try {
+        const [lon, lat] = formatPosition(position);
+  
+        const url = `
+        https://api.hgbrasil.com/weather?locale=pt&lat=${lat}&lon=${lon}&array_limit=7&fields=only_results&key=fc6021ed
+        `;
+  
+        const response = await fetch(url)
+        const data = await response.json();
+  
+        setLoading(false);
+        setResults(data);
+      } catch (error) {
+        setLoading(false);
+  
+        console.log(error);
+      }
+    }
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(fetchResults, showError);
     } else {
