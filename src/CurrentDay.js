@@ -4,14 +4,26 @@ export default function CurrentDay({ today, index }) {
       <div className="condition">
         <h2>{today.city_name}</h2>
         <p>{today.forecast[index].weekday} {today.forecast[index].date}</p>
-        <img
-          src={`./icons/${today.forecast[index].condition}.svg`}
-          alt={`${today.forecast[index].condition}`}
-        />
         {index === 0 ? 
-          (<p>{today.description}</p>) 
+          (
+            <>
+              <img
+                src={`./icons/${today.condition_slug}.svg`}
+                alt={`${today.condition_slug}`}
+              />
+              <p>{today.description}</p>
+            </>
+          ) 
           :
-          (<p>{today.forecast[index].description}</p>)
+          (
+            <>
+              <p>{today.forecast[index].description}</p>
+              <img
+                  src={`./icons/${today.forecast[index].condition}.svg`}
+                  alt={`${today.forecast[index].condition}`}
+                />
+            </>
+          )
         }
       </div>
       <div className="temperature">

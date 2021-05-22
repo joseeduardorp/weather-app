@@ -19,7 +19,7 @@ button {
   transition: filter .2s;
 
   &:hover {
-    filter: brightness(.9);
+    filter: brightness(.85);
   }
 }
 
@@ -56,12 +56,6 @@ article {
 
   h2 {
     font-size: 1.9rem;
-  }
-
-  button {
-    font-size: 1.6rem;
-    font-weight: bold;
-    text-transform: capitalize;
   }
 }
 
